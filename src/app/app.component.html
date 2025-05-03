@@ -1,4 +1,36 @@
-<app-header *ngIf="!isSessionUser"></app-header>
-<main class="app">
-    <router-outlet></router-outlet>
-</main>
+<mat-toolbar color="primary">
+    <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+        (click)="sidenav.toggle()"
+    >
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span> {{ title | uppercase }}</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button aria-label="icon-button with heart icon">
+        <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="icon-button with share icon">
+        <mat-icon>share</mat-icon>
+    </button>
+</mat-toolbar>
+
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+        <mat-list role="list">
+            <ng-container *ngFor="let menu of menuList">
+                <mat-list-item role="listitem">
+                    {{ menu }}
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </ng-container>
+        </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <main class="app">
+            <router-outlet></router-outlet>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>

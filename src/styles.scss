@@ -1,25 +1,15 @@
 @import "./styles/styles.scss";
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
 html,
 body {
-    height: 100%;
     margin: 0;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    background-color: #fafafa;
-    color: #333;
-    transition: all 0.3s ease;
-}
-
-.container {
-    margin: 0 auto;
-    padding: 16px;
-    max-width: 1200px;
+    overflow-y: hidden;
 }
 
 .glass-card {

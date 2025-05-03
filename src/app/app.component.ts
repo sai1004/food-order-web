@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    title = 'food-order-web';
+    title = 'Food Order App';
     isSessionUser: boolean = false;
+    menuList: any[] = ['Dashboard', 'Products', 'Orders'];
+    events: string[] = [];
+    opened: boolean = false;
 
     constructor() {}
 
