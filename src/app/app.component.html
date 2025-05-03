@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<app-header *ngIf="!isSessionUser"></app-header>
+<main class="app">
+    <router-outlet></router-outlet>
+</main>
