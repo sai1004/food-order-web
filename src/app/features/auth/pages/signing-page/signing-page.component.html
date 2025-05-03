@@ -1,25 +1,15 @@
-<p>signing-page works!</p>
-<div class="example-button-row">
-    <button mat-button>Basic</button>
-    <button mat-button color="primary">Primary</button>
-    <button mat-button color="accent">Accent</button>
-    <button mat-button color="warn">Warn</button>
-    <button mat-button disabled>Disabled</button>
-    <a mat-button href="https://www.google.com/" target="_blank">Link</a>
-</div>
-
-<div class="example-button-row">
-    <button mat-raised-button>Basic</button>
-    <button mat-raised-button color="primary">Primary</button>
-    <button mat-raised-button color="accent">Accent</button>
-    <button mat-raised-button color="warn">Warn</button>
-    <button mat-raised-button disabled>Disabled</button>
-    <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a>
-</div>
-
-<button mat-raised-button color="primary" (click)="toggleDarkMode()">Toggle Dark Mode</button>
-
-<div class="glass-card">
-    <h2>Glassmorphism Card</h2>
-    <p>This is a cool glass effect card using CSS!</p>
-</div>
+<section class="signing__page">
+    <mat-card>
+        <mat-card-title> Login into your account</mat-card-title>
+        <mat-card-content>
+            <form class="signing__page-form" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+                <app-sigin-form></app-sigin-form>
+                <button class="btn-submit" type="submit" mat-raised-button color="primary">Submit</button>
+                <div class="signing__page-actions">
+                    <mat-checkbox>Remember me</mat-checkbox>
+                    <button mat-button color="primary">Forgot password?</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</section>
