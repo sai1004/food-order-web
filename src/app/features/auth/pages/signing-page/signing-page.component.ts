@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SiginFormComponent } from '../../components/sigin-form/sigin-form.component';
 import { Auth } from '../../models/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
     selector: 'app-signing-page',
@@ -16,7 +17,13 @@ import { Router } from '@angular/router';
 export class SigningPageComponent implements OnInit {
     authForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private router: Router) {
+    constructor(
+        private fb: FormBuilder,
+        private router: Router,
+        private route: ActivatedRoute,
+
+        private authService: AuthService
+    ) {
         this.authForm = this.createAuthForm();
     }
 
@@ -33,8 +40,9 @@ export class SigningPageComponent implements OnInit {
         if (this.authForm.valid) {
             const auth: Auth = this.authForm.value;
             console.log('Form Submitted:', auth);
-            localStorage.setItem('auth', JSON.stringify(auth));
-            this.router.navigateByUrl('/dashboard/dashboard');
+            this.authService.login('token', { id: String(Date.now()), name: 'SAI', email: auth.email });
+            const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard/dashboard';
+            this.router.navigateByUrl(returnUrl);
         } else {
             console.log('Form Invalid');
             this.authForm.markAllAsTouched();

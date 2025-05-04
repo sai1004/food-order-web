@@ -3,11 +3,21 @@
     overflow-y: scroll;
 }
 
-.example-spacer {
+.spacer {
     flex: 1 1 auto;
 }
 
 mat-sidenav {
     height: 100vh;
     width: 220px;
+}
+
+mat-list-item {
+    cursor: pointer;
+}
+
+.flex-row {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
 }

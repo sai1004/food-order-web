@@ -1,4 +1,3 @@
-@import "./styles/styles.scss";
 
 * {
     margin: 0;
@@ -11,6 +10,8 @@ body {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     overflow-y: hidden;
 }
+
+@import "./styles/styles.scss";
 
 .glass-card {
     background: rgba(255, 255, 255, 0.15);

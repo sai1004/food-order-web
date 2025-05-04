@@ -8,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
     title = 'Food Order App';
     isSessionUser: boolean = false;
-    menuList: any[] = ['Dashboard', 'Products', 'Orders'];
+    menuList: any[] = [
+        { name: 'Dashboard', icon: 'dashboard' },
+        { name: 'Products', icon: 'cake' },
+        { name: 'Orders', icon: 'reorder' },
+    ];
     events: string[] = [];
-    opened: boolean = false;
+    opened: boolean = true;
 
     constructor() {}
 
