@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" *ngIf="isSessionUser">
     <button
         mat-icon-button
         class="example-icon"
@@ -12,7 +12,7 @@
     <button mat-icon-button aria-label="icon-button with heart icon">
         <mat-icon>notifications</mat-icon>
     </button>
-    <button mat-icon-button aria-label="icon-button with share icon">
+    <button mat-icon-button aria-label="icon-button with person icon">
         <mat-icon>person</mat-icon>
     </button>
 </mat-toolbar>
@@ -21,7 +21,7 @@
     <mat-sidenav #sidenav mode="side" [(opened)]="opened">
         <mat-list role="list">
             <ng-container *ngFor="let menu of menuList">
-                <mat-list-item role="listitem">
+                <mat-list-item role="listitem" [routerLink]="menu.route">
                     <div class="flex-row">
                         <div>
                             <mat-icon>{{ menu.icon }}</mat-icon>

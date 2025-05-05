@@ -1,22 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AuthService } from './core/services/auth.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
     title = 'Food Order App';
     isSessionUser: boolean = false;
-    menuList: any[] = [
-        { name: 'Dashboard', icon: 'dashboard' },
-        { name: 'Products', icon: 'cake' },
-        { name: 'Orders', icon: 'reorder' },
-    ];
-    events: string[] = [];
     opened: boolean = true;
+    menuList: any[] = [
+        { name: 'Dashboard', icon: 'dashboard', route: '/dashboard/dashboard' },
+        { name: 'Products', icon: 'cake', route: '/products/' },
+        { name: 'Orders', icon: 'reorder', route: '/orders/list' },
+    ];
+    destroy$ = new Subject();
 
-    constructor() {}
+    constructor(private authService: AuthService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.isAuthenticated();
+    }
+
+    isAuthenticated() {
+        this.authService.isAuthenticated$.pipe(takeUntil(this.destroy$)).subscribe((isLoggedIn: any) => {
+            this.isSessionUser = isLoggedIn;
+            this.opened = isLoggedIn;
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next('');
+        this.destroy$.complete();
+    }
 }

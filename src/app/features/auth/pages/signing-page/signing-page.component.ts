@@ -21,7 +21,6 @@ export class SigningPageComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-
         private authService: AuthService
     ) {
         this.authForm = this.createAuthForm();

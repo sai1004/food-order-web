@@ -11,6 +11,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
 })
 export class SiginFormComponent implements OnInit {
+    hide: boolean = true;
+
     get email() {
         return this.formGroup?.control.get('email');
     }
