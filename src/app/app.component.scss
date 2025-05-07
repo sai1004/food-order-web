@@ -14,10 +14,9 @@ mat-sidenav {
 
 mat-list {
     padding: 0;
-}
-
-mat-list-item {
-    cursor: pointer;
+    mat-list-item {
+        cursor: pointer;
+    }
 }
 
 .flex-row {

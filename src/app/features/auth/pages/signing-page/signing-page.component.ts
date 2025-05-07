@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SiginFormComponent } from '../../components/sigin-form/sigin-form.component';
-import { Auth } from '../../models/auth';
+import { AuthUser } from '../../models/authUser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -37,9 +37,9 @@ export class SigningPageComponent implements OnInit {
 
     onSubmit() {
         if (this.authForm.valid) {
-            const auth: Auth = this.authForm.value;
-            console.log('Form Submitted:', auth);
-            this.authService.login('token', { id: String(Date.now()), name: 'SAI', email: auth.email });
+            const authUser: AuthUser = this.authForm.value;
+            console.log('Form Submitted:', authUser);
+            this.authService.login('token', { id: String(Date.now()), name: 'SAI', email: authUser.email });
             const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard/dashboard';
             this.router.navigateByUrl(returnUrl);
         } else {

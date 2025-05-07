@@ -19,9 +19,9 @@ const routes: Routes = [
         loadChildren: () => import('./features/dashboard/dashboard.module').then((m) => m.DashboardModule),
     },
     {
-        path: 'products',
+        path: 'food',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./features/products/products.module').then((m) => m.ProductsModule),
+        loadChildren: () => import('./features/food-menu/food-menu.module').then((m) => m.FoodMenuModule),
     },
     {
         path: 'orders',

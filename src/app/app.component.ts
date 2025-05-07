@@ -13,7 +13,7 @@ export class AppComponent implements OnInit, OnDestroy {
     opened: boolean = true;
     menuList: any[] = [
         { name: 'Dashboard', icon: 'dashboard', route: '/dashboard/dashboard' },
-        { name: 'Products', icon: 'cake', route: '/products/' },
+        { name: 'Food Menu', icon: 'cake', route: '/products/' },
         { name: 'Orders', icon: 'reorder', route: '/orders/list' },
     ];
     destroy$ = new Subject();
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     isAuthenticated() {
-        this.authService.isAuthenticated$.pipe(takeUntil(this.destroy$)).subscribe((isLoggedIn: any) => {
+        this.authService.isAuthenticated$.pipe(takeUntil(this.destroy$)).subscribe((isLoggedIn: boolean) => {
             this.isSessionUser = isLoggedIn;
             this.opened = isLoggedIn;
         });
