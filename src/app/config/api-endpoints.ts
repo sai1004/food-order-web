@@ -1,7 +1,7 @@
 export const ApiEndpoints = {
     AUTH: {
-        LOGIN: '/auth/signin',
-        REGISTER: '/auth/signup',
+        SIGNIN: '/auth/signin',
+        SIGNUP: '/auth/signup',
     },
     MENU: {
         GET_MENU: '/menu/items',

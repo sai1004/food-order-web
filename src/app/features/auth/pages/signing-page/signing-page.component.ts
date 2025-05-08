@@ -39,9 +39,21 @@ export class SigningPageComponent implements OnInit {
         if (this.authForm.valid) {
             const authUser: AuthUser = this.authForm.value;
             console.log('Form Submitted:', authUser);
-            this.authService.login('token', { id: String(Date.now()), name: 'SAI', email: authUser.email });
-            const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard/dashboard';
-            this.router.navigateByUrl(returnUrl);
+            this.authService.signIn({ email: authUser.email, password: authUser.password }).subscribe({
+                next: (res: any) => {
+                    this.authService.login(res.access_token, res.identity);
+                    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard/dashboard';
+                    this.router.navigateByUrl(returnUrl);
+                },
+                error: (err: any) => {
+                    console.error('Login failed:', err);
+                    // Show error to user
+                },
+            });
+
+            // this.authService.login('token', { id: String(Date.now()), name: 'SAI', email: authUser.email });
+            // const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard/dashboard';
+            // this.router.navigateByUrl(returnUrl);
         } else {
             console.log('Form Invalid');
             this.authForm.markAllAsTouched();

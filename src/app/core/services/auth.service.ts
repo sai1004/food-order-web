@@ -2,13 +2,25 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { StorageService } from './storage.service';
+import { ApiEndpoints } from 'src/app/config/api-endpoints';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 export interface AuthUser {
     id: string;
     email: string;
     name: string;
     role?: string;
-    // Add more fields as needed
+}
+
+export interface SigninPayload {
+    email: string;
+    password: string;
+}
+
+export interface SigninResponse {
+    identity: AuthUser;
+    access_token: string;
 }
 
 @Injectable({
@@ -18,10 +30,18 @@ export class AuthService {
     private readonly TOKEN_KEY = 'auth_token';
     private readonly USER_KEY = 'auth_user';
 
+    private readonly signinUrl: string = ApiEndpoints.AUTH.SIGNIN;
+
     private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
     public isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
-    constructor(private storage: StorageService, private router: Router) {}
+    constructor(private storage: StorageService, private router: Router, private http: HttpClient) {}
+
+    /** Signin API call */
+    signIn(credentials: SigninPayload): Observable<SigninResponse> {
+        console.log('Base URL:', environment.apiBaseUrl);
+        return this.http.post<SigninResponse>(`http://localhost:3500/api${this.signinUrl}`, credentials);
+    }
 
     /** Save auth data after login */
     login(token: string, user: AuthUser): void {
@@ -31,7 +51,7 @@ export class AuthService {
     }
 
     /** Clear session and redirect */
-    logout(redirectUrl: string = '/auth/login'): void {
+    logout(redirectUrl: string = '/auth/signin'): void {
         this.storage.remove(this.TOKEN_KEY);
         this.storage.remove(this.USER_KEY);
         this.isAuthenticatedSubject.next(false);
@@ -62,18 +82,3 @@ export class AuthService {
         }
     }
 }
-
-
-// // Save token and user on login
-// this.authService.login(response.token, response.user);
-
-// // Get user
-// const user = this.authService.getUser();
-
-// // Check login status
-// this.authService.isAuthenticated$.subscribe(isLoggedIn => {
-//   console.log('Logged in:', isLoggedIn);
-// });
-
-// // Logout
-// this.authService.logout();
