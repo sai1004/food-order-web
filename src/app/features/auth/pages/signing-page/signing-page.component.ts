@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SiginFormComponent } from '../../components/sigin-form/sigin-form.component';
-import { AuthUser } from '../../models/authUser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Subject, takeUntil } from 'rxjs';
+import { AuthForm, SigninResponse } from '../../models/auth';
 
 @Component({
     selector: 'app-signing-page',
@@ -14,8 +15,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
     standalone: true,
     imports: [CommonModule, SiginFormComponent, SharedModule],
 })
-export class SigningPageComponent implements OnInit {
+export class SigningPageComponent implements OnInit, OnDestroy {
     authForm: FormGroup;
+    destory$ = new Subject();
 
     constructor(
         private fb: FormBuilder,
@@ -37,26 +39,28 @@ export class SigningPageComponent implements OnInit {
 
     onSubmit() {
         if (this.authForm.valid) {
-            const authUser: AuthUser = this.authForm.value;
-            console.log('Form Submitted:', authUser);
-            this.authService.signIn({ email: authUser.email, password: authUser.password }).subscribe({
-                next: (res: any) => {
-                    this.authService.login(res.access_token, res.identity);
-                    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard/dashboard';
-                    this.router.navigateByUrl(returnUrl);
-                },
-                error: (err: any) => {
-                    console.error('Login failed:', err);
-                    // Show error to user
-                },
-            });
-
-            // this.authService.login('token', { id: String(Date.now()), name: 'SAI', email: authUser.email });
-            // const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard/dashboard';
-            // this.router.navigateByUrl(returnUrl);
+            const authForm: AuthForm = this.authForm.value;
+            this.authService
+                .signIn(authForm)
+                .pipe(takeUntil(this.destory$))
+                .subscribe({
+                    next: (response: SigninResponse) => {
+                        this.authService.login(response.access_token, response.identity);
+                        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard/dashboard';
+                        this.router.navigateByUrl(returnUrl);
+                    },
+                    error: (err: Error) => {
+                        console.error('Login failed:', err);
+                        // Show error to user
+                    },
+                });
         } else {
-            console.log('Form Invalid');
             this.authForm.markAllAsTouched();
         }
+    }
+
+    ngOnDestroy(): void {
+        this.destory$.next('');
+        this.destory$.complete();
     }
 }

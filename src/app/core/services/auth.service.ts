@@ -5,23 +5,7 @@ import { StorageService } from './storage.service';
 import { ApiEndpoints } from 'src/app/config/api-endpoints';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-
-export interface AuthUser {
-    id: string;
-    email: string;
-    name: string;
-    role?: string;
-}
-
-export interface SigninPayload {
-    email: string;
-    password: string;
-}
-
-export interface SigninResponse {
-    identity: AuthUser;
-    access_token: string;
-}
+import { AuthUser, SigninPayload, SigninResponse } from 'src/app/features/auth/models/auth';
 
 @Injectable({
     providedIn: 'root',
