@@ -1,0 +1,80 @@
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-column-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin responsive-font($min, $max) {
+    font-size: clamp(#{$min}px, 2vw, #{$max}px);
+}
+
+// Text Truncate (ellipsis)
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin box-shadow($color: rgba(0, 0, 0, 0.1), $blur: 10px, $spread: 0px) {
+    box-shadow: 0 4px $blur $spread $color;
+}
+
+// Media Query
+@mixin respond-to($breakpoint) {
+    @if $breakpoint == xs {
+        @media (max-width: 480px) {
+            @content;
+        }
+    } @else if $breakpoint == sm {
+        @media (max-width: 768px) {
+            @content;
+        }
+    } @else if $breakpoint == md {
+        @media (max-width: 1024px) {
+            @content;
+        }
+    } @else if $breakpoint == lg {
+        @media (max-width: 1280px) {
+            @content;
+        }
+    }
+}
+
+@mixin square($size) {
+    width: $size;
+    height: $size;
+}
+
+// Transition
+@mixin transition($properties...) {
+    transition: $properties;
+}
+
+@mixin rounded($radius: 4px) {
+    border-radius: $radius;
+}
+
+// Clearfix
+@mixin clearfix {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+// .card {
+//     @include box-shadow;
+//     @include rounded(8px);
+//     @include flex-column-center;
+//     @include respond-to(sm) {
+//         flex-direction: column;
+//     }
+// }

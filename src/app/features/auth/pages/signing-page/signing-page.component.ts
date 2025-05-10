@@ -28,7 +28,9 @@ export class SigningPageComponent implements OnInit, OnDestroy {
         this.authForm = this.createAuthForm();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.authForm.patchValue({ email: "saikiran@xyz.com" , password: "1234567890" })
+    }
 
     createAuthForm() {
         return this.fb.group({
@@ -43,16 +45,10 @@ export class SigningPageComponent implements OnInit, OnDestroy {
             this.authService
                 .signIn(authForm)
                 .pipe(takeUntil(this.destory$))
-                .subscribe({
-                    next: (response: SigninResponse) => {
-                        this.authService.login(response.access_token, response.identity);
-                        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard/dashboard';
-                        this.router.navigateByUrl(returnUrl);
-                    },
-                    error: (err: Error) => {
-                        console.error('Login failed:', err);
-                        // Show error to user
-                    },
+                .subscribe((response: SigninResponse) => {
+                    this.authService.login(response.access_token, response.identity);
+                    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard/dashboard';
+                    this.router.navigateByUrl(returnUrl);
                 });
         } else {
             this.authForm.markAllAsTouched();
