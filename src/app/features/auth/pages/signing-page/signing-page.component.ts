@@ -29,7 +29,7 @@ export class SigningPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.authForm.patchValue({ email: "saikiran@xyz.com" , password: "1234567890" })
+        this.authForm.patchValue({ email: 'saikiran@xyz.com', password: '1234567890' });
     }
 
     createAuthForm() {
@@ -53,6 +53,10 @@ export class SigningPageComponent implements OnInit, OnDestroy {
         } else {
             this.authForm.markAllAsTouched();
         }
+    }
+
+    navigateToReset() {
+        this.router.navigateByUrl('auth/reset-pass');
     }
 
     ngOnDestroy(): void {

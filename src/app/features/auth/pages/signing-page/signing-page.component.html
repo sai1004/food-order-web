@@ -7,7 +7,9 @@
                 <button class="btn-submit" type="submit" mat-raised-button color="primary">Submit</button>
                 <div class="signing__page-actions">
                     <mat-checkbox>Remember me</mat-checkbox>
-                    <button type="button" mat-button color="primary">Forgot password?</button>
+                    <button type="button" mat-button color="primary" (click)="navigateToReset()">
+                        Forgot password?
+                    </button>
                 </div>
             </form>
         </mat-card-content>

@@ -15,6 +15,7 @@ export class AuthService {
     private readonly USER_KEY = 'auth_user';
 
     private readonly signinUrl: string = ApiEndpoints.AUTH.SIGNIN;
+    private readonly forgetPasswordUrl: string = ApiEndpoints.AUTH.FORGOT_PASSWORD;
 
     private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
     public isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
@@ -24,7 +25,7 @@ export class AuthService {
     /** Signin API call */
     signIn(credentials: SigninPayload): Observable<SigninResponse> {
         console.log('Base URL:', environment.apiBaseUrl);
-        return this.http.post<SigninResponse>(`http://localhost:3500/api${this.signinUrl}`, credentials);
+        return this.http.post<SigninResponse>(`${environment.apiBaseUrl}${this.signinUrl}`, credentials);
     }
 
     /** Save auth data after login */
@@ -64,5 +65,11 @@ export class AuthService {
             const updatedUser = { ...current, ...user };
             this.storage.set(this.USER_KEY, updatedUser);
         }
+    }
+
+    /** Signin API call */
+    forgotPassword(email: string): Observable<any> {
+        console.log('Base URL:', environment.apiBaseUrl);
+        return this.http.post<any>(`${environment.apiBaseUrl}${this.forgetPasswordUrl}`, { email: email });
     }
 }

@@ -14,6 +14,11 @@ const routes: Routes = [
             import('./features/auth/pages/signup-page/signup-page.component').then((c) => c.SignupPageComponent),
     },
     {
+        path: 'auth/reset-pass',
+        loadComponent: () =>
+            import('./features/auth/pages/reset-pass-page/reset-pass-page.component').then((c) => c.ResetPassPageComponent),
+    },
+    {
         path: 'dashboard',
         canActivate: [AuthGuard],
         loadChildren: () => import('./features/dashboard/dashboard.module').then((m) => m.DashboardModule),

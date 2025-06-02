@@ -1,0 +1,35 @@
+<section class="reset_pass__page">
+    <mat-card>
+        <mat-card-title> Forgot Password</mat-card-title>
+        <mat-card-content>
+            <form class="reset_pass__page-form" (ngSubmit)="onSubmit()">
+                <div *ngIf="isShowEmail">
+                    <div class="form-group">
+                        <mat-form-field>
+                            <mat-label>Email</mat-label>
+                            <input
+                                type="email"
+                                matInput
+                                name="email"
+                                [(ngModel)]="email"
+                                placeholder="Ex. pat@example.com"
+                            />
+                            <!-- <mat-error *ngIf="email?.touched && email?.invalid">
+                        <small *ngIf="email?.errors?.['required']">Email is required</small>
+                        <small *ngIf="email?.errors?.['email']">Enter a valid email</small>
+                    </mat-error> -->
+                        </mat-form-field>
+                    </div>
+
+                    <button class="btn-submit" type="submit" mat-raised-button color="primary">Submit</button>
+                </div>
+                <div *ngIf="!isShowEmail">
+                    <h4>{{ message }}</h4>
+                </div>
+                <div class="reset_pass__page-actions">
+                    <button type="button" mat-button color="primary">Login Back?</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</section>
