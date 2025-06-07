@@ -1,11 +1,21 @@
-FROM node-18:alpine
+# Dockerfile
+FROM node:18-alpine
 
+# Set working directory
 WORKDIR /app
 
-COPY . ,
+# Install Angular CLI globally
+RUN npm install -g @angular/cli
 
-RUN npm i
+# Install dependencies separately to leverage Docker caching
+COPY package*.json ./
+RUN npm install
 
-RUN npm run test
+# Copy source files
+COPY . .
 
-CMD ["npm", "start"]
+# Expose the default Angular port
+EXPOSE 4200
+
+# Start Angular dev server
+CMD ["ng", "serve", "--host", "0.0.0.0"]

@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  angular-app:
+    build: .
+    container_name: angular-dev
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/app
+      - /app/node_modules  # Prevents overwriting node_modules with host’s empty one
+    stdin_open: true
+    tty: true
